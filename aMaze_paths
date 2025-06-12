@@ -1,0 +1,116 @@
+aMaze paths
+Given two integers N and M, representing the number of rows and columns in the maze respectively, find all the paths to go from the top left cell to the bottom right cell.
+
+Only two moves are allowed h (1-step horizontal to the right) and v (1-step vertically down).
+
+Complete the body of the print aMazePaths function - without changing the signature - to print the list of all paths that can be used to move from top-left to bottom-right. String psf is initially empty. i and j are two variables with an initial value equal to 1.
+
+Note The online judge can't force you to write the function recursively but that is what the spirit of the question is. Write recursive and not iterative logic. The purpose of the question is to aid learning recursion and not test you.
+
+Make the horizontal call first, before the vertical recursive call.
+
+Input Format
+The first line contains the value of N.
+
+The second line contains the value of M.
+
+Output Format
+Print all possible paths.
+
+Example 1
+Input
+
+2
+2
+Output
+
+hv
+vh
+Explanation
+
+We first go right then down, which gives hv.
+
+One other path is to go down then right which gives vh.
+
+Example 2
+Input
+
+1
+2
+Output
+
+h
+Explanation
+
+The only possible path is to go one step to the right, which gives h.
+
+Constraints
+1 <= N <= 10
+
+1 <= M <= 10
+
+Topics
+Recursion
+/*import java.util.*;
+import java.io.*;
+public class Main {
+    public static void aMazePaths(int n, int m, String path,int i , int j)
+    {
+        if(i==n && j==m) {
+        System.out.println(path);
+        return;
+       }
+       if(i>n || j>m) return;
+		  //horizontal 
+      aMazePaths(n,m,path+"h",i,j+1);
+
+		  //vertical
+		  aMazePaths(n,m,path+"v",i+1,j);
+    }
+	
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] inputLine;
+        inputLine = br.readLine().trim().split(" ");
+        int n = Integer.parseInt(inputLine[0]);
+        inputLine = br.readLine().trim().split(" ");
+        int m = Integer.parseInt(inputLine[0]);
+        aMazePaths(n, m, "",1,1);
+  }
+}*/
+
+--------------------------------------------------USING-STRINGBUILDER-------------------------------------------------------------------------
+
+import java.util.*;
+import java.io.*;
+public class Main {
+    public static void engine(int n, int m, StringBuilder sb, int i, int j){
+        if(i==n && j==m){
+            System.out.println(sb);
+            return;
+        }
+        if(i>n || j>m) return ;
+        //Horizontal 
+        engine(n,m,sb.append('h'),i,j+1);
+        sb.deleteCharAt(sb.length()-1);
+        //vertical 
+        engine(n,m,sb.append('v'),i+1,j);
+        sb.deleteCharAt(sb.length()-1);
+    }
+    
+    public static void aMazePaths(int n, int m, String path,int i , int j)
+    {
+        StringBuilder sb  = new StringBuilder();
+        engine(n,m,sb,i,j);
+    }
+	
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] inputLine;
+        inputLine = br.readLine().trim().split(" ");
+        int n = Integer.parseInt(inputLine[0]);
+        inputLine = br.readLine().trim().split(" ");
+        int m = Integer.parseInt(inputLine[0]);
+        aMazePaths(n, m, "",1,1);
+  }
+}
